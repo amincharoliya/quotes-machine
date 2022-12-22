@@ -21,6 +21,7 @@ export default function Header() {
 						alt="Logo"
 						height={150}
 						width={150}
+						priority={true}
 					/>
 					<Image
 						className="hidden dark:block"
@@ -28,6 +29,7 @@ export default function Header() {
 						alt="White Logo"
 						height={150}
 						width={150}
+						priority={true}
 					/>
 				</Link>
 
