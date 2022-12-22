@@ -4,8 +4,8 @@ export const defaultMetaProps = {
 	title: 'Quote Machine',
 	description:
 		'Welcome to Quote Machine, Share your quotes with other users.',
-	ogImage: `https://www.amincharoliya.com/images/amin.jpg`,
-	ogUrl: 'https://www.amincharoliya.com/',
+	ogImage: `http://localhost:3000/logo.svg`,
+	ogUrl: 'http://localhost:3000/',
 };
 
 export interface MetaProps {
