@@ -1,12 +1,13 @@
 import Layout from '../components/layout/index';
 import { defaultMetaProps } from '../components/layout/meta';
+import ActivityFeed from '../components/activity/activityFeed';
 
 export default function Home() {
 	return (
 		<Layout meta={defaultMetaProps}>
-			<h1 className="text-3xl text-center font-bold text-theme-light dark:text-theme-dark p-2">
-				Quote Machine
-			</h1>
+			<div className="lg:container px-5 mx-auto ">
+				<ActivityFeed />
+			</div>
 		</Layout>
 	);
 }
