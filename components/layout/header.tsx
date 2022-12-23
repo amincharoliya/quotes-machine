@@ -75,7 +75,7 @@ export default function Header() {
 					>
 						<ul className="flex flex-col w-full md:flex-row md:w-auto">
 							<li className="block md:inline-block">
-								<MenuItem text="Login" url="/" />
+								<MenuItem text="Login" url="/login" />
 							</li>
 							<li className="block md:inline-block">
 								<MenuItem text="Signup" url="/" />
