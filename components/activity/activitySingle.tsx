@@ -4,8 +4,8 @@ import { Quote } from '../icons';
 
 export default function Activity() {
 	return (
-		<div className="bg-white dark:bg-slate-800 p-4 mb-6 rounded-md max-w-4xl mx-auto">
-			<div className="flex items-center">
+		<div className="bg-white dark:bg-slate-800 p-4 mb-6 rounded-md max-w-3xl mx-auto">
+			<div className="flex items-center mb-4">
 				<div className="h-20 w-20 flex items-center justify-center rounded-lg overflow-hidden bg-theme-dark">
 					<Image
 						src="/images/profiles/profile-1.png"
@@ -28,13 +28,14 @@ export default function Activity() {
 				</div>
 			</div>
 			<div>
-				<blockquote className="py-6">
-					<Quote className="text-slate-900 dark:text-white mb-2" />
-					<p className="mb-2">
-						The greatest glory in living lies not in never falling,
-						but in rising every time we fall
+				<blockquote className="bg-slate-100 dark:bg-slate-900 rounded-md p-4 text-center">
+					<Quote className="text-slate-900 dark:text-white mb-4 h-5 w-5 mx-auto" />
+					<p className="mb-2 text-lg font-notoSans">
+						{
+							"If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success."
+						}
 					</p>
-					<p className="text-right">- Nelson Mandela</p>
+					<p className="text-lg font-notoSans">- James Cameron</p>
 				</blockquote>
 			</div>
 		</div>

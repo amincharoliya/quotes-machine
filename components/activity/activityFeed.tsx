@@ -5,6 +5,10 @@ export default function ActivityFeed() {
 		<>
 			<Activity />
 			<Activity />
+			<Activity />
+			<Activity />
+			<Activity />
+			<Activity />
 		</>
 	);
 }
