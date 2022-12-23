@@ -78,7 +78,7 @@ export default function Header() {
 								<MenuItem text="Login" url="/login" />
 							</li>
 							<li className="block md:inline-block">
-								<MenuItem text="Signup" url="/" />
+								<MenuItem text="Signup" url="/register" />
 							</li>
 						</ul>
 					</nav>
