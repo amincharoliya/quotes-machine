@@ -3,9 +3,11 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { Close, Menu } from '../icons';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Header() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const router = useRouter();
 	return (
 		<header
 			className={clsx(
@@ -41,10 +43,24 @@ export default function Header() {
 					>
 						<ul className="flex flex-col w-full md:flex-row md:w-auto">
 							<li className="block md:inline-block">
-								<MenuItem text="Home" url="/" active={true} />
+								<MenuItem
+									text="Home"
+									url="/"
+									active={
+										router.asPath === '/' ? true : false
+									}
+								/>
 							</li>
 							<li className="block md:inline-block">
-								<MenuItem text="Top Quotes" url="/" />
+								<MenuItem
+									text="Members"
+									url="/members"
+									active={
+										router.asPath === '/members'
+											? true
+											: false
+									}
+								/>
 							</li>
 							<li className="block md:inline-block">
 								<MenuItem text="About" url="/" />
