@@ -75,10 +75,26 @@ export default function Header() {
 					>
 						<ul className="flex flex-col w-full md:flex-row md:w-auto">
 							<li className="block md:inline-block">
-								<MenuItem text="Login" url="/login" />
+								<MenuItem
+									text="Login"
+									url="/login"
+									active={
+										router.asPath === '/login'
+											? true
+											: false
+									}
+								/>
 							</li>
 							<li className="block md:inline-block">
-								<MenuItem text="Signup" url="/register" />
+								<MenuItem
+									text="Signup"
+									url="/register"
+									active={
+										router.asPath === '/register'
+											? true
+											: false
+									}
+								/>
 							</li>
 						</ul>
 					</nav>
