@@ -1,11 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
+import { useSession, signOut } from 'next-auth/react';
 import { Close, Menu } from '../icons';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function Header() {
+	const { status, data: session } = useSession();
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const router = useRouter();
 	return (
@@ -74,28 +76,47 @@ export default function Header() {
 						className="flex w-full md:w-auto"
 					>
 						<ul className="flex flex-col w-full md:flex-row md:w-auto">
-							<li className="block md:inline-block">
-								<MenuItem
-									text="Login"
-									url="/login"
-									active={
-										router.asPath === '/login'
-											? true
-											: false
-									}
-								/>
-							</li>
-							<li className="block md:inline-block">
-								<MenuItem
-									text="Signup"
-									url="/register"
-									active={
-										router.asPath === '/register'
-											? true
-											: false
-									}
-								/>
-							</li>
+							{status == 'loading' ? (
+								'loading...'
+							) : session?.user ? (
+								<>
+									<p>{session.user.name}</p>
+									<button
+										onClick={() =>
+											signOut({
+												callbackUrl: '/',
+											})
+										}
+									>
+										Logout
+									</button>
+								</>
+							) : (
+								<>
+									<li className="block md:inline-block">
+										<MenuItem
+											text="Login"
+											url="/login"
+											active={
+												router.asPath === '/login'
+													? true
+													: false
+											}
+										/>
+									</li>
+									<li className="block md:inline-block">
+										<MenuItem
+											text="Signup"
+											url="/register"
+											active={
+												router.asPath === '/register'
+													? true
+													: false
+											}
+										/>
+									</li>
+								</>
+							)}
 						</ul>
 					</nav>
 				</div>
