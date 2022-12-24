@@ -56,7 +56,7 @@ const resolver: Resolver<FormValues> = async (values) => {
 	};
 };
 
-export default function EditProfile() {
+const EditProfile = () => {
 	const { status, data: session } = useSession();
 	const [customError, setCustomError] = useState(null);
 	const [avatar, setAvatar] = useState(null);
@@ -159,7 +159,7 @@ export default function EditProfile() {
 					<label className="block">
 						<strong className="block mb-3">Name</strong>
 						<input
-							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md"
+							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md text-slate-900"
 							type="text"
 							placeholder="Enter Email"
 							{...register('name')}
@@ -173,7 +173,7 @@ export default function EditProfile() {
 					<label className="block">
 						<strong className="block mb-3">Email</strong>
 						<input
-							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md opacity-80 cursor-not-allowed"
+							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md text-slate-900 opacity-80 cursor-not-allowed"
 							type="email"
 							placeholder="Enter Email"
 							value={session.user.email}
@@ -189,7 +189,7 @@ export default function EditProfile() {
 					<label className="block">
 						<strong className="block mb-3">Password</strong>
 						<input
-							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md"
+							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md text-slate-900"
 							type="password"
 							placeholder="Enter Password"
 							{...register('password')}
@@ -210,4 +210,7 @@ export default function EditProfile() {
 			</div>
 		</Layout>
 	);
-}
+};
+
+EditProfile.auth = true;
+export default EditProfile;
