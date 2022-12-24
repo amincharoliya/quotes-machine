@@ -83,7 +83,7 @@ export default function Page() {
 							{...register('email')}
 						/>
 						{errors.email && (
-							<span className="border-2 border-red-600">
+							<span className="block -mt-3 mb-3 text-red-600 dark:text-red-300">
 								{errors.email.message}
 							</span>
 						)}
@@ -97,7 +97,7 @@ export default function Page() {
 							{...register('password')}
 						/>
 						{errors.password && (
-							<span className="border-2 border-red-600">
+							<span className="block -mt-3 mb-3 text-red-600 dark:text-red-300">
 								{errors.password.message}
 							</span>
 						)}
