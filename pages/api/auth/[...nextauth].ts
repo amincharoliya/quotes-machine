@@ -3,7 +3,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import bcryptjs from 'bcryptjs';
 import User from '../../../models/User';
 import db from '../../../utils/db';
-import { use } from 'react';
 
 export default NextAuth({
 	session: {
