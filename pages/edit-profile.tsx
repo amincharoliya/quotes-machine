@@ -76,9 +76,8 @@ export default function EditProfile() {
 		register,
 		handleSubmit,
 		setValue,
-		watch,
 		formState: { errors },
-	} = useForm();
+	} = useForm<FormValues>({ resolver });
 
 	useEffect(() => {
 		if (session?.user) {
@@ -166,6 +165,11 @@ export default function EditProfile() {
 							{...register('name')}
 						/>
 					</label>
+					{errors.name && (
+						<span className="block -mt-3 mb-3 text-red-600 dark:text-red-300">
+							{errors.name.message}
+						</span>
+					)}
 					<label className="block">
 						<strong className="block mb-3">Email</strong>
 						<input
@@ -177,6 +181,11 @@ export default function EditProfile() {
 							{...register('email')}
 						/>
 					</label>
+					{errors.email && (
+						<span className="block -mt-3 mb-3 text-red-600 dark:text-red-300">
+							{errors.email.message}
+						</span>
+					)}
 					<label className="block">
 						<strong className="block mb-3">Password</strong>
 						<input
@@ -186,6 +195,11 @@ export default function EditProfile() {
 							{...register('password')}
 						/>
 					</label>
+					{errors.password && (
+						<span className="block -mt-3 mb-3 text-red-600 dark:text-red-300">
+							{errors.password.message}
+						</span>
+					)}
 					<button
 						className="w-full p-3 bg-theme-light text-white rounded-md"
 						type="submit"
