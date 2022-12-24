@@ -7,7 +7,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	let users;
 
 	try {
-		users = await User.find().lean();
+		users = await User.find().select('-password').select('-isAdmin').lean();
 	} catch (err) {
 		return new Error(err);
 	}
