@@ -15,8 +15,12 @@ export default function ActivityForm({ quotes, setQuotes }) {
 
 	const handleSubmit = async () => {
 		event.preventDefault();
-		if (!quoteRef.current.value || !quoteAuthorRef.current.value) {
+		if (
+			!quoteRef.current.value.trim() ||
+			!quoteAuthorRef.current.value.trim()
+		) {
 			alert('Please make sure to fill all fields');
+			return;
 		}
 		const newQuote = {
 			quote: quoteRef.current.value,
