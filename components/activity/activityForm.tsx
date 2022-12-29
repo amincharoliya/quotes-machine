@@ -69,13 +69,13 @@ export default function ActivityForm({ quotes, setQuotes }) {
 					</div>
 					<div className="flex-1">
 						<textarea
-							className="w-full resize-none border-2 rounded-md h-20 p-3"
+							className="w-full resize-none border-2 rounded-md h-20 p-3 dark:bg-slate-900 dark:border-0"
 							placeholder="Share a new quote"
 							ref={quoteRef}
 						></textarea>
 						<input
 							type="text"
-							className="w-full resize-none border-2 rounded-md p-3"
+							className="w-full resize-none border-2 rounded-md p-3 dark:bg-slate-900 dark:border-0"
 							placeholder="Author name"
 							ref={quoteAuthorRef}
 						/>
