@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 
 	if (quotes.length === 0) {
-		return res.status(404).json({ message: 'No User found' });
+		return res.status(404).json({ message: 'No Quotes found' });
 	}
 
 	await db.disconnect();
