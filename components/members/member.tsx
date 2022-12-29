@@ -28,7 +28,8 @@ export default function Member({ member, quotes = null }) {
 					</p>
 					{quotes ? (
 						<p>
-							<strong>{quotes}</strong> quotes shared
+							<strong>{quotes}</strong>{' '}
+							{quotes > 1 ? 'quotes' : 'quote'} shared
 						</p>
 					) : (
 						''
