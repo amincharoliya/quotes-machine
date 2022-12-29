@@ -1,12 +1,18 @@
 import mongoose, { Document } from 'mongoose';
 
+type Like = {
+	id: string;
+	name: string;
+	image: string;
+};
+
 interface IQuote extends Document {
 	user: mongoose.Types.ObjectId;
 	userImage: string;
 	userName: string;
 	quote: string;
 	author: string;
-	likes?: mongoose.Types.ObjectId;
+	likes?: Array<Like>;
 }
 
 const Schema = new mongoose.Schema<IQuote>(
@@ -16,7 +22,13 @@ const Schema = new mongoose.Schema<IQuote>(
 		userName: { type: String, require: true },
 		quote: { type: String, require: true },
 		author: { type: String, require: true },
-		likes: { type: mongoose.Schema.Types.ObjectId },
+		likes: [
+			{
+				id: { type: String },
+				name: { type: String },
+				image: { type: String },
+			},
+		],
 	},
 	{
 		timestamps: true,
