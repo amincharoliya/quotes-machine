@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import ActivityFeed from '../../components/activity/activityFeed';
 import ActivityPlaceholder from '../../components/activity/activityPlaceholder';
 import Activity from '../../components/activity/activitySingle';
 import Layout from '../../components/layout';

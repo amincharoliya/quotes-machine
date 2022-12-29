@@ -6,8 +6,24 @@ import User from '../../../models/User';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await db.connect();
-	const member = await User.findById(req.query.id);
-	const memberQuotes = await Quote.find({ user: req.query.id });
+	let member;
+	let memberQuotes;
+
+	try {
+		member = await User.findById(req.query.id);
+		memberQuotes = await Quote.find({ user: req.query.id });
+	} catch (err) {
+		return new Error(err);
+	}
+
+	if (!member || !memberQuotes) {
+		return res.status(500).json({ message: 'Internal server error' });
+	}
+
+	if (member.length === 0) {
+		return res.status(404).json({ message: 'No User found' });
+	}
+
 	await db.disconnect();
 	res.send({ member: member, quotes: memberQuotes });
 };
