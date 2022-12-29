@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Member({ member }) {
+export default function Member({ member, quotes = null }) {
 	const date = new Date(member.createdAt).toDateString();
 	return (
 		<div className="bg-white dark:bg-slate-800 p-4">
@@ -17,13 +17,22 @@ export default function Member({ member }) {
 				<div className="flex-1 ml-4">
 					<h2>
 						<Link
-							href={'/' + member._id}
+							href={'/members/' + member._id}
 							className=" font-bold hover:text-theme-light hover:dark:text-theme-dark duration-300"
 						>
 							{member.name}
 						</Link>
 					</h2>
-					<p>Joined {date}</p>
+					<p>
+						Joined <strong>{date}</strong>
+					</p>
+					{quotes ? (
+						<p>
+							<strong>{quotes}</strong> quotes shared
+						</p>
+					) : (
+						''
+					)}
 				</div>
 			</div>
 		</div>
