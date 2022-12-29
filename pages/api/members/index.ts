@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import User from '../../models/User';
-import db from '../../utils/db';
+import User from '../../../models/User';
+import db from '../../../utils/db';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await db.connect();
