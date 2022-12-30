@@ -1,11 +1,11 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import { Check, Close } from '../icons';
+import { Alert, Check, Close } from '../icons';
 
 export default function ActivityForm({ quotes, setQuotes }) {
 	const { data: session } = useSession();
-	const [notice, setNotice] = useState(null);
+	const [notice, setNotice] = useState<{ type: string; text: string }>(null);
 	const quoteRef = useRef(null);
 	const quoteAuthorRef = useRef(null);
 
@@ -15,11 +15,15 @@ export default function ActivityForm({ quotes, setQuotes }) {
 
 	const handleSubmit = async () => {
 		event.preventDefault();
+		setNotice(null);
 		if (
 			!quoteRef.current.value.trim() ||
 			!quoteAuthorRef.current.value.trim()
 		) {
-			alert('Please make sure to fill all fields');
+			setNotice({
+				type: 'alert',
+				text: 'Please make sure to fill all fields',
+			});
 			return;
 		}
 		const newQuote = {
@@ -36,14 +40,15 @@ export default function ActivityForm({ quotes, setQuotes }) {
 				body: JSON.stringify(newQuote),
 			});
 		} catch (err) {
-			alert(err.message);
+			setNotice({ type: 'alert', text: err.message });
 		} finally {
-			setNotice('Quote posted successfully.');
+			setNotice({ type: 'update', text: 'Quote posted successfully.' });
 			const newQuote = {
 				quote: quoteRef.current.value,
 				author: quoteAuthorRef.current.value,
 				userName: session.user.name,
 				userImage: session.user.image,
+				likes: [],
 				createdAt: new Date().toDateString(),
 			};
 			setQuotes([newQuote, ...quotes]);
@@ -96,8 +101,12 @@ export default function ActivityForm({ quotes, setQuotes }) {
 			</div>
 			{notice && (
 				<div className="flex items-center bg-white dark:bg-slate-800 p-4 mb-6 rounded-md">
-					<Check className="h-6 w-6 mr-3" />
-					{notice}
+					{notice.type == 'alert' ? (
+						<Alert className="h-6 w-6 mr-3" />
+					) : (
+						<Check className="h-6 w-6 mr-3" />
+					)}
+					{notice.text}
 					<button
 						className="cursor-pointer ml-auto"
 						aria-label="Clear notice"
