@@ -261,7 +261,7 @@ export default function Header() {
 				></div>
 
 				<button
-					className="fixed top-4 right-5 bg-theme-light dark:bg-theme-dark text-white dark:text-slate-900 rounded-sm p-2 md:hidden"
+					className="group-[:not(.closed)]:fixed top-4 right-5 bg-theme-light dark:bg-theme-dark text-white dark:text-slate-900 rounded-sm p-2 md:hidden"
 					onClick={() => setSidebarOpen(!sidebarOpen)}
 				>
 					<span className="hidden group-[.closed]:block">
