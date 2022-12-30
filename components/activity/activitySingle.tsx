@@ -86,7 +86,7 @@ export default function Activity({ data }) {
 			</div>
 			<div className="mb-6">
 				<blockquote className="bg-slate-100 dark:bg-slate-900 rounded-md p-4 text-center">
-					<Quote className="text-slate-900 dark:text-white mb-4 h-5 w-5 mx-auto" />
+					<Quote className="fill-slate-900 dark:fill-white mb-4 h-5 w-5 mx-auto" />
 					<p className="mb-2 text-lg font-notoSans">{data.quote}</p>
 					<p className="text-lg font-notoSans">- {data.author}</p>
 				</blockquote>
