@@ -25,13 +25,12 @@ export default function ThemeSwitch({ classes }) {
 				htmlFor="theme-switch"
 				data-headlessui-state=""
 			>
-				Theme
+				Theme switch
 			</label>
 			<button
 				id="theme-switch"
 				className={classes}
 				onClick={() => ToggleTheme()}
-				aria-la
 			>
 				{theme == 'dark' ? (
 					<Moon
