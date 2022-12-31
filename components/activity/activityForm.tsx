@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { Alert, Check, Close } from '../icons';
 
-export default function ActivityForm({ quotes, setQuotes }) {
+export default function ActivityForm({ quotes, setQuotes, setFeedNotice }) {
 	const { data: session } = useSession();
 	const [notice, setNotice] = useState<{ type: string; text: string }>(null);
 	const quoteRef = useRef(null);
@@ -51,7 +51,10 @@ export default function ActivityForm({ quotes, setQuotes }) {
 				likes: [],
 				createdAt: new Date().toDateString(),
 			};
-			setQuotes([newQuote, ...quotes]);
+			quotes && quotes.length
+				? setQuotes([newQuote, ...quotes])
+				: setQuotes([newQuote]);
+			setFeedNotice(null);
 			quoteAuthorRef.current.value = '';
 			quoteRef.current.value = '';
 		}

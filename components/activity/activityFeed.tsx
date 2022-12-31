@@ -20,7 +20,11 @@ export default function ActivityFeed() {
 	if (notice) {
 		return (
 			<>
-				<ActivityForm quotes={quotes} setQuotes={setQuotes} />
+				<ActivityForm
+					quotes={quotes}
+					setQuotes={setQuotes}
+					setFeedNotice={setNotice}
+				/>
 				<p className="flex items-center max-w-3xl mx-auto mb-8 bg-white dark:bg-slate-800 p-4 rounded-md">
 					{' '}
 					<Alert className="w-8 h-8 mr-4" /> {notice}
@@ -30,7 +34,11 @@ export default function ActivityFeed() {
 	}
 	return (
 		<>
-			<ActivityForm quotes={quotes} setQuotes={setQuotes} />
+			<ActivityForm
+				quotes={quotes}
+				setQuotes={setQuotes}
+				setFeedNotice={setNotice}
+			/>
 			{quotes && quotes.length ? (
 				quotes.map((quote) => <Activity key={quote._id} data={quote} />)
 			) : (
