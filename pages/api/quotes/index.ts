@@ -6,7 +6,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	await db.connect();
 	let quotes;
 	try {
-		quotes = await Quote.find();
+		quotes = await Quote.find()
+			.populate({
+				path: 'user',
+				select: 'id name image',
+			})
+			.populate({
+				path: 'likes',
+				select: 'id name image',
+			});
 	} catch (err) {
 		return new Error(err);
 	}

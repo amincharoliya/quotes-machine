@@ -46,8 +46,11 @@ export default function ActivityForm({ quotes, setQuotes, setFeedNotice }) {
 			const newQuote = {
 				quote: quoteRef.current.value,
 				author: quoteAuthorRef.current.value,
-				userName: session.user.name,
-				userImage: session.user.image,
+				user: {
+					image: session.user.image,
+					name: session.user.name,
+					_id: session.user.id,
+				},
 				likes: [],
 				createdAt: new Date().toDateString(),
 			};

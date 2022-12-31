@@ -14,8 +14,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const newQuote = new Quote({
 		...req.body,
 		user: user.id,
-		userName: user.name,
-		userImage: user.image,
 	});
 
 	const quote = await newQuote.save();

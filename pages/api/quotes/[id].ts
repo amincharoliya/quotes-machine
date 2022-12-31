@@ -36,21 +36,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 		try {
 			quote = await Quote.findById(req.query.id);
+			if (!quote) {
+				return res.status(404).json({ message: 'No Quote found' });
+			}
+			if (!quote.likes.includes(likes.id)) {
+				quote.likes.push(likes.id);
+				await quote.save();
+			}
 		} catch (err) {
 			return new Error(err);
 		}
 
-		const found = quote.likes.some((el) => el.id === likes.id);
-
-		if (!found) {
-			// Like quote
-			const updatedLikes = [...quote.likes, { ...likes }];
-			quote.likes = updatedLikes;
-		}
-
-		const newQuote = await quote.save();
 		await db.disconnect();
-		res.status(201).send(newQuote);
+		res.status(201).send(quote);
 	}
 };
 

@@ -27,7 +27,10 @@ export default function Activity({ data }) {
 	};
 
 	const handleLike = async (id) => {
-		const found = likes.some((el) => el.id === session.user.id);
+		if (!session?.user) {
+			return;
+		}
+		const found = likes.some((el) => el._id === session.user.id);
 		if (!found) {
 			const updateQuote = await fetch(`/api/quotes/${id}`, {
 				method: 'PUT',
@@ -38,8 +41,6 @@ export default function Activity({ data }) {
 				body: JSON.stringify({
 					likes: {
 						id: session.user.id,
-						name: session.user.name,
-						image: session.user.image,
 					},
 				}),
 			});
@@ -50,7 +51,7 @@ export default function Activity({ data }) {
 				setLikes([
 					...likes,
 					{
-						id: session.user.id,
+						_id: session.user.id,
 						name: session.user.name,
 						image: session.user.image,
 					},
@@ -62,9 +63,9 @@ export default function Activity({ data }) {
 		<div className="bg-white dark:bg-slate-800 p-4 mb-6 rounded-md max-w-3xl mx-auto">
 			<div className="flex items-center mb-4">
 				<div className="h-20 w-20 flex items-center justify-center rounded-lg overflow-hidden bg-theme-dark">
-					<Link href={'/members/' + data.user}>
+					<Link href={'/members/' + data.user._id}>
 						<Image
-							src={'/images/profiles/' + data.userImage + '.png'}
+							src={'/images/profiles/' + data.user.image + '.png'}
 							width={64}
 							height={64}
 							alt="Avatar"
@@ -74,10 +75,10 @@ export default function Activity({ data }) {
 				<div className="flex-1 ml-4">
 					<h2>
 						<Link
-							href={'/members/' + data.user}
+							href={'/members/' + data.user._id}
 							className=" font-bold hover:text-theme-light hover:dark:text-theme-dark duration-300"
 						>
-							{data.userName}
+							{data.user.name}
 						</Link>{' '}
 						posted a new quote
 					</h2>
