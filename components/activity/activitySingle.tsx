@@ -93,7 +93,7 @@ export default function Activity({ data }) {
 			</div>
 			<div className="flex items-center mb-2">
 				<button
-					className="mr-3"
+					className="mr-2"
 					title="like"
 					onClick={() => handleLike(data._id)}
 				>
