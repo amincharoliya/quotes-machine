@@ -11,7 +11,7 @@ export default function Activity({ data }) {
 	const getLikeString = () => {
 		let firstLike = likes.length ? likes[likes.length - 1].name : '';
 		if (session && session.user) {
-			const found = likes.some((el) => el.id === session.user.id);
+			const found = likes.some((el) => el._id === session.user.id);
 			if (found) {
 				firstLike = 'You';
 			}
