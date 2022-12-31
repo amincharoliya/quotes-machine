@@ -6,6 +6,11 @@ import { Close, Menu } from '../icons';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { DropdownMenu, MenuButton, DPMenu, DPMenuItem } from '../DropdownMenu';
+import dynamic from 'next/dynamic';
+
+const ThemeSwitch = dynamic(() => import('./themeSwithch'), {
+	ssr: false,
+});
 
 export default function Header() {
 	const { status, data: session } = useSession();
@@ -272,6 +277,7 @@ export default function Header() {
 					</span>
 				</button>
 			</div>
+			<ThemeSwitch classes="fixed right-5 bottom-20 bg-white dark:bg-slate-800 p-4 rounded-md" />
 		</header>
 	);
 }

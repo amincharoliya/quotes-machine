@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { SessionProvider, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { ThemeProvider } from 'next-themes';
 
 export default function App({
 	Component,
@@ -9,13 +10,15 @@ export default function App({
 }: AppProps) {
 	return (
 		<SessionProvider session={session}>
-			{Component.auth ? (
-				<Auth>
+			<ThemeProvider attribute="class">
+				{Component.auth ? (
+					<Auth>
+						<Component {...pageProps} />
+					</Auth>
+				) : (
 					<Component {...pageProps} />
-				</Auth>
-			) : (
-				<Component {...pageProps} />
-			)}
+				)}
+			</ThemeProvider>
 		</SessionProvider>
 	);
 }

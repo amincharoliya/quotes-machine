@@ -102,9 +102,9 @@ export default function ActivityForm({ quotes, setQuotes }) {
 			{notice && (
 				<div className="flex items-center bg-white dark:bg-slate-800 p-4 mb-6 rounded-md">
 					{notice.type == 'alert' ? (
-						<Alert className="h-6 w-6 mr-3" />
+						<Alert className="h-8 w-8 mr-4" />
 					) : (
-						<Check className="h-6 w-6 mr-3" />
+						<Check className="h-8 w-8 mr-4" />
 					)}
 					{notice.text}
 					<button
