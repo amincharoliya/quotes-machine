@@ -92,7 +92,7 @@ export default function Activity({ data }) {
 					<p className="text-lg font-notoSans">- {data.author}</p>
 				</blockquote>
 			</div>
-			<div className="flex items-center mb-2">
+			<div className="flex items-center mb-2 relative">
 				<button
 					className="mr-2"
 					title="like"
@@ -100,7 +100,37 @@ export default function Activity({ data }) {
 				>
 					<ThumbUp className="h-5 w-5" />
 				</button>
-				<span className="text-sm">{getLikeString()}</span>
+				<div className="group">
+					<span className="text-sm">{getLikeString()}</span>
+					<ul className="hidden group-hover:block absolute bottom-6 left-5 w-36 bg-white dark:bg-slate-800 rounded-md py-2 shadow-md max-h-40 overflow-auto">
+						{data.likes.map((like) => (
+							<li key={like._id}>
+								<Link
+									href={'/members/' + like._id}
+									className="flex items-center hover:bg-slate-100 dark:hover:bg-slate-900 p-2"
+								>
+									<div className="h-8 w-8 flex items-center justify-center rounded-full overflow-hidden bg-theme-dark mr-3">
+										<Link href={'/members/' + like._id}>
+											<Image
+												src={
+													'/images/profiles/' +
+													like.image +
+													'.png'
+												}
+												width={34}
+												height={34}
+												alt="Avatar"
+											/>
+										</Link>
+									</div>
+									<span className="hover:text-theme-light hover:dark:text-theme-dark duration-300 text-sm leading-none">
+										{like.name}
+									</span>
+								</Link>
+							</li>
+						))}
+					</ul>
+				</div>
 			</div>
 		</div>
 	);
