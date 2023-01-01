@@ -12,7 +12,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	let quote;
 	if (req.method === 'GET') {
 		try {
-			quote = await Quote.findById(req.query.id);
+			quote = await Quote.findById(req.query.id)
+				.populate({
+					path: 'user',
+					select: 'id name image',
+				})
+				.populate({
+					path: 'likes',
+					select: 'id name image',
+				});
 		} catch (err) {
 			return new Error(err);
 		}

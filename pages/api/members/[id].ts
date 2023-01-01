@@ -11,7 +11,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	try {
 		member = await User.findById(req.query.id);
-		memberQuotes = await Quote.find({ user: req.query.id });
+		memberQuotes = await Quote.find({ user: req.query.id })
+			.populate({
+				path: 'user',
+				select: 'id name image',
+			})
+			.populate({
+				path: 'likes',
+				select: 'id name image',
+			});
 	} catch (err) {
 		return new Error(err);
 	}
