@@ -277,7 +277,7 @@ export default function Header() {
 					</span>
 				</button>
 			</div>
-			<ThemeSwitch classes="fixed right-5 bottom-20 bg-white dark:bg-slate-800 p-4 rounded-md" />
+			<ThemeSwitch classes="fixed right-5 bottom-20 bg-white dark:bg-slate-800 p-4 rounded-md shadow-md" />
 		</header>
 	);
 }
