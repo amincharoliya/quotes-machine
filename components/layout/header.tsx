@@ -240,7 +240,7 @@ export default function Header() {
 				</div>
 
 				<div
-					className="block overlay bg-black/20 fixed inset-0 group-[.closed]:hidden md:hidden"
+					className="block overlay bg-black/20 fixed z-10 inset-0 group-[.closed]:hidden md:hidden"
 					onClick={() => setSidebarOpen(false)}
 				></div>
 
@@ -256,7 +256,7 @@ export default function Header() {
 					</span>
 				</button>
 			</div>
-			<ThemeSwitch classes="fixed right-5 bottom-20 bg-white dark:bg-slate-800 p-4 rounded-md shadow-md" />
+			<ThemeSwitch classes="fixed right-5 bottom-20 z-10 bg-white dark:bg-slate-800 p-4 rounded-md shadow-md" />
 		</header>
 	);
 }
