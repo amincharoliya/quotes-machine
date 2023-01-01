@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Quote, ThumbUp } from '../icons';
+import clsx from 'clsx';
+import { Close, Quote, ThumbUp } from '../icons';
 
 export default function Activity({ data }) {
 	const { data: session } = useSession();
 	const [likes, setLikes] = useState(() => data.likes);
+	const [likesVisibility, setLikesVisibility] = useState(false);
 
 	const getLikeString = () => {
 		let firstLike = likes.length ? likes[likes.length - 1].name : '';
@@ -92,44 +94,73 @@ export default function Activity({ data }) {
 					<p className="text-lg font-notoSans">- {data.author}</p>
 				</blockquote>
 			</div>
-			<div className="flex items-center mb-2 relative">
+			<div className="flex items-center mb-2">
 				<button
-					className="mr-2"
+					className="mr-2 hover:text-theme-light hover:dark:text-theme-dark duration-300"
 					title="like"
 					onClick={() => handleLike(data._id)}
 				>
 					<ThumbUp className="h-5 w-5" />
 				</button>
-				<div className="group">
-					<span className="text-sm">{getLikeString()}</span>
-					<ul className="hidden group-hover:block absolute bottom-6 left-5 w-36 bg-white dark:bg-slate-800 rounded-md py-2 shadow-md max-h-40 overflow-auto">
-						{data.likes.map((like) => (
-							<li key={like._id}>
-								<Link
-									href={'/members/' + like._id}
-									className="flex items-center hover:bg-slate-100 dark:hover:bg-slate-900 p-2"
-								>
-									<div className="h-8 w-8 flex items-center justify-center rounded-full overflow-hidden bg-theme-dark mr-3">
-										<Link href={'/members/' + like._id}>
-											<Image
-												src={
-													'/images/profiles/' +
-													like.image +
-													'.png'
-												}
-												width={34}
-												height={34}
-												alt="Avatar"
-											/>
-										</Link>
-									</div>
-									<span className="hover:text-theme-light hover:dark:text-theme-dark duration-300 text-sm leading-none">
-										{like.name}
-									</span>
-								</Link>
-							</li>
-						))}
-					</ul>
+				<div className={clsx('group', likesVisibility && 'open')}>
+					<button
+						className="text-sm hover:text-theme-light hover:dark:text-theme-dark duration-300"
+						onClick={() => setLikesVisibility(!likesVisibility)}
+					>
+						{getLikeString()}
+					</button>
+					<div
+						className="hidden group-[.open]:block fixed z-10 left-2/4 top-1/2 -translate-x-1/2 -translate-y-1/2 w-52 bg-white dark:bg-slate-800 rounded-md py-2 shadow-md duration-300"
+						role="dialog"
+						aria-live="assertive"
+						aria-labelledby={'modal-title-' + data._id}
+					>
+						<button
+							className="hidden group-[.open]:block absolute right-0 top-0 bg-white dark:bg-slate-800 rounded-md p-1"
+							aria-label="Close"
+							onClick={() => setLikesVisibility(!likesVisibility)}
+						>
+							<Close className="h-6  w-6" />
+						</button>
+						<h3
+							className="px-3 mb-2 text-sm"
+							id={'modal-title-' + data._id}
+						>
+							Liked by
+						</h3>
+						<ul className="max-h-60 overflow-auto">
+							{data.likes.map((like) => (
+								<li key={like._id}>
+									<Link
+										href={'/members/' + like._id}
+										className="group/link flex items-center hover:bg-slate-100 dark:hover:bg-slate-900 px-3 py-2"
+									>
+										<div className="h-10 w-10 flex items-center justify-center rounded-full overflow-hidden bg-theme-dark mr-3">
+											<Link href={'/members/' + like._id}>
+												<Image
+													src={
+														'/images/profiles/' +
+														like.image +
+														'.png'
+													}
+													width={32}
+													height={32}
+													alt="Avatar"
+												/>
+											</Link>
+										</div>
+										<span className="group-hover/link:text-theme-light dark:group-hover/link:text-theme-dark duration-300 text-sm leading-none">
+											{like.name}
+										</span>
+									</Link>
+								</li>
+							))}
+						</ul>
+					</div>
+					<div
+						className="hidden group-[.open]:block fixed inset-0 bg-black/40"
+						onClick={() => setLikesVisibility(!likesVisibility)}
+					></div>
 				</div>
 			</div>
 		</div>
