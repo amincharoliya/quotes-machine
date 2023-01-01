@@ -14,12 +14,14 @@ export default function MemberSingle() {
 	const [data, setData] = useState(null);
 
 	useEffect(() => {
-		fetch(`/api/members/${query.id}`)
-			.then((data) => data.json())
-			.then((data) => setData(data));
-	}, []);
+		if (query.id) {
+			fetch(`/api/members/${query.id}`)
+				.then((data) => data.json())
+				.then((data) => setData(data));
+		}
+	}, [query]);
 
-	if (!data) {
+	if (!data || !query) {
 		return (
 			<Layout meta={props}>
 				<div className="lg:container px-5 mx-auto ">
