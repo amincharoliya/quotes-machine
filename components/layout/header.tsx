@@ -43,7 +43,7 @@ export default function Header() {
 					/>
 				</Link>
 
-				<div className="nav-wrap fixed z-20 left-0 group-[.closed]:-left-full top-0 bottom-0 flex-col flex flex-1 w-3/4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border-r-2 dark:border-slate-50/[0.06] pt-5 md:border-r-0 md:bg-transparent md:backdrop-blur-none md:flex-row md:static md:pt-0  duration-300">
+				<div className="nav-wrap fixed z-20 left-0 group-[.closed]:-left-full top-0 bottom-0 flex-col flex flex-1 w-3/4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border-r-2 dark:border-slate-50/[0.06] pt-5 max-h-screen overflow-auto md:max-h-screen md:overflow-visible md:border-r-0 md:bg-transparent md:backdrop-blur-none md:flex-row md:static md:pt-0 duration-300">
 					<nav
 						aria-label="main menu"
 						role="navigation"
@@ -108,24 +108,13 @@ export default function Header() {
 									<li className="block">
 										<MenuItem
 											text="Profile"
-											url="/profile"
-											active={
-												router.asPath === '/profile'
-													? true
-													: false
-											}
+											url={'/members/' + session.user.id}
 										/>
 									</li>
 									<li className="block">
 										<MenuItem
 											text="Edit Profile"
 											url="/edit-profile"
-											active={
-												router.asPath ===
-												'/edit-profile'
-													? true
-													: false
-											}
 										/>
 									</li>
 									<li className="block">
@@ -144,25 +133,12 @@ export default function Header() {
 							) : (
 								<>
 									<li className="block">
-										<MenuItem
-											text="Login"
-											url="/login"
-											active={
-												router.asPath === '/login'
-													? true
-													: false
-											}
-										/>
+										<MenuItem text="Login" url="/login" />
 									</li>
 									<li className="block">
 										<MenuItem
 											text="Signup"
 											url="/register"
-											active={
-												router.asPath === '/register'
-													? true
-													: false
-											}
 										/>
 									</li>
 								</>
@@ -201,7 +177,10 @@ export default function Header() {
 										<DPMenu className="absolute top-full right-0 p-3 rounded-md bg-white dark:bg-slate-800 w-40 shadow-sm mt-4">
 											<DPMenuItem>
 												<Link
-													href="/profile"
+													href={
+														'/members/' +
+														session.user.id
+													}
 													className="block hover:bg-slate-100 dark:hover:bg-slate-900 px-3 py-2 rounded-md"
 												>
 													Profile
