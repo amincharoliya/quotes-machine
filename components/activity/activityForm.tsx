@@ -1,11 +1,16 @@
 import { useSession } from 'next-auth/react';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Alert, Check, Close } from '../icons';
 
 export default function ActivityForm({ quotes, setQuotes, setFeedNotice }) {
 	const { data: session } = useSession();
 	const [notice, setNotice] = useState<{ type: string; text: string }>(null);
+	const notify = (message) => toast(message);
+	const { theme } = useTheme();
 	const quoteRef = useRef(null);
 	const quoteAuthorRef = useRef(null);
 
@@ -40,9 +45,9 @@ export default function ActivityForm({ quotes, setQuotes, setFeedNotice }) {
 				body: JSON.stringify(newQuote),
 			});
 		} catch (err) {
-			setNotice({ type: 'alert', text: err.message });
+			notify(err.message);
 		} finally {
-			setNotice({ type: 'update', text: 'Quote posted successfully.' });
+			notify('Quote posted successfully.');
 			const newQuote = {
 				quote: quoteRef.current.value,
 				author: quoteAuthorRef.current.value,
@@ -122,6 +127,10 @@ export default function ActivityForm({ quotes, setQuotes, setFeedNotice }) {
 					</button>
 				</div>
 			)}
+			<ToastContainer
+				position="bottom-right"
+				theme={theme == 'light' ? 'light' : 'dark'}
+			/>
 		</div>
 	);
 }
