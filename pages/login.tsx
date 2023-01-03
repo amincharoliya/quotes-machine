@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ArrowRound } from '../components/icons';
 import { useTheme } from 'next-themes';
+import clsx from 'clsx';
 
 type FormValues = {
 	email: string;
@@ -87,7 +88,7 @@ export default function Page() {
 					<label className="block">
 						<strong className="block mb-3">Email</strong>
 						<input
-							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md"
+							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white dark:bg-slate-900/75 rounded-md"
 							type="email"
 							placeholder="Enter Email"
 							{...register('email')}
@@ -101,7 +102,7 @@ export default function Page() {
 					<label className="block">
 						<strong className="block mb-3">Password</strong>
 						<input
-							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md"
+							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white dark:bg-slate-900/75 rounded-md"
 							type="password"
 							placeholder="Enter Password"
 							{...register('password')}
@@ -113,7 +114,10 @@ export default function Page() {
 						)}
 					</label>
 					<button
-						className="w-full p-3 bg-theme-light text-white rounded-md flex items-center justify-center"
+						className={clsx(
+							'w-full p-3 bg-theme-light text-white rounded-md flex items-center justify-center',
+							sending && 'pointer-events-none opacity-80'
+						)}
 						type="submit"
 					>
 						{sending ? 'Logging In' : 'Login'}
