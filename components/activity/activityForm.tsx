@@ -1,14 +1,16 @@
+import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Alert, Check, Close } from '../icons';
+import { Alert, ArrowRound, Check, Close } from '../icons';
 
 export default function ActivityForm({ quotes, setQuotes, setFeedNotice }) {
 	const { data: session } = useSession();
 	const [notice, setNotice] = useState<{ type: string; text: string }>(null);
+	const [sending, isSending] = useState<boolean>(false);
 	const notify = (message) => toast(message);
 	const { theme } = useTheme();
 	const quoteRef = useRef(null);
@@ -31,6 +33,7 @@ export default function ActivityForm({ quotes, setQuotes, setFeedNotice }) {
 			});
 			return;
 		}
+		isSending(true);
 		const newQuote = {
 			quote: quoteRef.current.value,
 			author: quoteAuthorRef.current.value,
@@ -65,6 +68,7 @@ export default function ActivityForm({ quotes, setQuotes, setFeedNotice }) {
 			setFeedNotice(null);
 			quoteAuthorRef.current.value = '';
 			quoteRef.current.value = '';
+			isSending(false);
 		}
 	};
 
@@ -102,9 +106,17 @@ export default function ActivityForm({ quotes, setQuotes, setFeedNotice }) {
 						<div className="text-right mt-4">
 							<button
 								type="submit"
-								className="px-4 py-2 bg-theme-light text-white rounded-md"
+								className={clsx(
+									'px-4 py-2 bg-theme-light text-white rounded-md flex items-center ml-auto',
+									sending && 'pointer-events-none opacity-80'
+								)}
 							>
-								Post
+								{sending ? 'Posting' : 'Post'}
+								{sending ? (
+									<ArrowRound className="h-4 w-4 ml-2 animate-spin" />
+								) : (
+									''
+								)}
 							</button>
 						</div>
 					</div>
