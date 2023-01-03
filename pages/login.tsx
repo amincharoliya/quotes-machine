@@ -3,8 +3,12 @@ import Layout from '../components/layout/index';
 import { defaultMetaProps } from '../components/layout/meta';
 import { signIn, useSession } from 'next-auth/react';
 import { useForm, Resolver } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ArrowRound } from '../components/icons';
+import { useTheme } from 'next-themes';
 
 type FormValues = {
 	email: string;
@@ -38,6 +42,9 @@ export default function Page() {
 	const props = { ...defaultMetaProps, title: 'Login | Quote Machine' };
 	const { data: session } = useSession();
 	const router = useRouter();
+	const { theme } = useTheme();
+	const [sending, isSending] = useState<boolean>(false);
+	const notify = (message) => toast(message);
 
 	useEffect(() => {
 		if (session?.user) {
@@ -52,6 +59,7 @@ export default function Page() {
 	} = useForm<FormValues>({ resolver });
 
 	const submitHandler = async ({ email, password }) => {
+		isSending(true);
 		try {
 			const result = await signIn('credentials', {
 				redirect: false,
@@ -59,10 +67,12 @@ export default function Page() {
 				password,
 			});
 			if (result.error) {
-				alert(result.error);
+				notify(result.error);
+				isSending(false);
 			}
 		} catch (err) {
-			alert(err);
+			notify(err);
+			isSending(false);
 		}
 	};
 
@@ -103,10 +113,15 @@ export default function Page() {
 						)}
 					</label>
 					<button
-						className="w-full p-3 bg-theme-light text-white rounded-md"
+						className="w-full p-3 bg-theme-light text-white rounded-md flex items-center justify-center"
 						type="submit"
 					>
-						Login
+						{sending ? 'Logging In' : 'Login'}
+						{sending ? (
+							<ArrowRound className="h-4 w-4 ml-2 animate-spin" />
+						) : (
+							''
+						)}
 					</button>
 					<p className="mt-3">
 						{"Don't have an account? "}
@@ -119,6 +134,10 @@ export default function Page() {
 					</p>
 				</form>
 			</div>
+			<ToastContainer
+				position="bottom-right"
+				theme={theme == 'light' ? 'light' : 'dark'}
+			/>
 		</Layout>
 	);
 }
