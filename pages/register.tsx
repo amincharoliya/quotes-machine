@@ -178,7 +178,7 @@ export default function Page() {
 					<label className="block">
 						<strong className="block mb-3">Name</strong>
 						<input
-							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md"
+							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white dark:bg-slate-900/75 rounded-md"
 							type="text"
 							placeholder="Enter Name"
 							{...register('name')}
@@ -192,7 +192,7 @@ export default function Page() {
 					<label className="block">
 						<strong className="block mb-3">Email</strong>
 						<input
-							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md"
+							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white dark:bg-slate-900/75 rounded-md"
 							type="email"
 							placeholder="Enter Email"
 							{...register('email')}
@@ -206,7 +206,7 @@ export default function Page() {
 					<label className="block">
 						<strong className="block mb-3">Password</strong>
 						<input
-							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md"
+							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white dark:bg-slate-900/75 rounded-md"
 							type="password"
 							placeholder="Enter Password"
 							{...register('password')}
@@ -220,7 +220,7 @@ export default function Page() {
 					<label className="block">
 						<strong className="block mb-3">Confirm Password</strong>
 						<input
-							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white rounded-md"
+							className="border-2 dark:border-slate-50/[0.06] p-2 w-full mb-5 bg-white dark:bg-slate-900/75 rounded-md"
 							type="password"
 							placeholder="Confirm Password"
 							{...register('confirm_password')}
