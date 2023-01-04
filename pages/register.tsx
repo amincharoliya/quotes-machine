@@ -4,6 +4,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Resolver, useForm } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useTheme } from 'next-themes';
+import clsx from 'clsx';
 import { defaultMetaProps } from '../components/layout/meta';
 import Layout from '../components/layout/index';
 import randomProfile from '../utils/randomProfile';
@@ -79,6 +83,9 @@ const resolver: Resolver<FormValues> = async (values) => {
 
 export default function Page() {
 	const props = { ...defaultMetaProps, title: 'SignUp | Quote Machine' };
+	const { theme } = useTheme();
+	const [sending, isSending] = useState<boolean>(false);
+	const notify = (message) => toast(message);
 	const [customError, setCustomError] = useState(null);
 	const [avatar, setAvatar] = useState(() => randomProfile());
 	const randomImage = () => {
@@ -109,6 +116,7 @@ export default function Page() {
 		if (password !== confirm_password) {
 			return;
 		}
+		isSending(true);
 
 		try {
 			const addUSer = await fetch('/api/auth/register', {
@@ -127,7 +135,8 @@ export default function Page() {
 
 			const response = await addUSer.json();
 			if (!addUSer.ok) {
-				setCustomError(response.message);
+				notify(response.message);
+				isSending(false);
 			} else {
 				const result = await signIn('credentials', {
 					redirect: false,
@@ -137,7 +146,8 @@ export default function Page() {
 				});
 			}
 		} catch (err) {
-			setCustomError(err.message);
+			notify(err.message);
+			isSending(false);
 		}
 	};
 
@@ -229,10 +239,18 @@ export default function Page() {
 						</p>
 					) : null}
 					<button
-						className="w-full p-3 bg-theme-light text-white rounded-md"
+						className={clsx(
+							'w-full p-3 bg-theme-light text-white rounded-md flex items-center justify-center',
+							sending && 'pointer-events-none opacity-80'
+						)}
 						type="submit"
 					>
-						Signup
+						{sending ? 'Signing Up' : 'Signup'}
+						{sending ? (
+							<ArrowRound className="h-4 w-4 ml-2 animate-spin" />
+						) : (
+							''
+						)}
 					</button>
 					<p className="mt-3">
 						{'Already have an account? '}
@@ -245,6 +263,10 @@ export default function Page() {
 					</p>
 				</form>
 			</div>
+			<ToastContainer
+				position="bottom-right"
+				theme={theme == 'light' ? 'light' : 'dark'}
+			/>
 		</Layout>
 	);
 }
