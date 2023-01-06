@@ -2,6 +2,10 @@ import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Resolver, useForm } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useTheme } from 'next-themes';
+import clsx from 'clsx';
 import { ArrowRound } from '../components/icons';
 import Layout from '../components/layout';
 import { defaultMetaProps } from '../components/layout/meta';
@@ -58,7 +62,9 @@ const resolver: Resolver<FormValues> = async (values) => {
 
 const EditProfile = () => {
 	const { status, data: session } = useSession();
-	const [customError, setCustomError] = useState(null);
+	const { theme } = useTheme();
+	const [sending, isSending] = useState<boolean>(false);
+	const notify = (message) => toast(message);
 	const [avatar, setAvatar] = useState(null);
 
 	const props = {
@@ -87,6 +93,7 @@ const EditProfile = () => {
 	}, [session?.user, setValue]);
 
 	const submitHandler = async ({ name, email, password }) => {
+		isSending(true);
 		try {
 			const updateUser = await fetch('/api/auth/update', {
 				method: 'POST',
@@ -104,7 +111,8 @@ const EditProfile = () => {
 
 			const response = await updateUser.json();
 			if (!updateUser.ok) {
-				alert(response.message);
+				notify(response.message);
+				isSending(false);
 				return;
 			} else {
 				const result = await signIn('credentials', {
@@ -113,10 +121,12 @@ const EditProfile = () => {
 					password,
 				});
 				if (result.error) {
-					alert(result.error);
+					notify(result.error);
+					isSending(false);
 				}
 			}
-			alert('Profile details updated');
+			notify('Profile details updated');
+			isSending(false);
 		} catch (err) {
 			alert(err.message);
 		}
@@ -201,13 +211,25 @@ const EditProfile = () => {
 						</span>
 					)}
 					<button
-						className="w-full p-3 bg-theme-light text-white rounded-md"
+						className={clsx(
+							'w-full p-3 bg-theme-light text-white rounded-md flex items-center justify-center',
+							sending && 'pointer-events-none opacity-80'
+						)}
 						type="submit"
 					>
-						Update
+						{sending ? 'Updating' : 'Update'}
+						{sending ? (
+							<ArrowRound className="h-4 w-4 ml-2 animate-spin" />
+						) : (
+							''
+						)}
 					</button>
 				</form>
 			</div>
+			<ToastContainer
+				position="bottom-right"
+				theme={theme == 'light' ? 'light' : 'dark'}
+			/>
 		</Layout>
 	);
 };
