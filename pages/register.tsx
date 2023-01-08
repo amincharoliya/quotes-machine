@@ -252,7 +252,7 @@ export default function Page() {
 							''
 						)}
 					</button>
-					<p className="mt-3">
+					<p className="mt-3 mb-5">
 						{'Already have an account? '}
 						<Link
 							className="hover:text-theme-light hover:dark:text-theme-dark"
@@ -260,6 +260,10 @@ export default function Page() {
 						>
 							Login
 						</Link>
+					</p>
+					<p className="font-semibold text-center">
+						This is just a demo website. Don&apos;t add your
+						personal details.
 					</p>
 				</form>
 			</div>
