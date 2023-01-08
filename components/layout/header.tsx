@@ -70,9 +70,6 @@ export default function Header() {
 									}
 								/>
 							</li>
-							<li className="block md:inline-block">
-								<MenuItem text="About" url="/" />
-							</li>
 						</ul>
 					</nav>
 
