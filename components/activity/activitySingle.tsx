@@ -139,18 +139,16 @@ export default function Activity({ data }) {
 										className="group/link flex items-center hover:bg-slate-100 dark:hover:bg-slate-900 px-3 py-2"
 									>
 										<div className="h-10 w-10 flex items-center justify-center rounded-full overflow-hidden bg-theme-dark mr-3">
-											<Link href={'/members/' + like._id}>
-												<Image
-													src={
-														'/images/profiles/' +
-														like.image +
-														'.png'
-													}
-													width={32}
-													height={32}
-													alt="Avatar"
-												/>
-											</Link>
+											<Image
+												src={
+													'/images/profiles/' +
+													like.image +
+													'.png'
+												}
+												width={32}
+												height={32}
+												alt="Avatar"
+											/>
 										</div>
 										<span className="group-hover/link:text-theme-light dark:group-hover/link:text-theme-dark duration-300 text-sm leading-none">
 											{like.name}
