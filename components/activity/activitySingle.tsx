@@ -132,7 +132,7 @@ export default function Activity({ data }) {
 							Liked by
 						</h3>
 						<ul className="max-h-60 overflow-auto">
-							{data.likes.map((like) => (
+							{likes.map((like) => (
 								<li key={like._id}>
 									<Link
 										href={'/members/' + like._id}
