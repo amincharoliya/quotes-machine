@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Loader from './loader';
 
 export default function Footer() {
 	return (
@@ -13,6 +14,7 @@ export default function Footer() {
 					Built by Amin Charoliya
 				</Link>
 			</div>
+			<Loader />
 		</footer>
 	);
 }
