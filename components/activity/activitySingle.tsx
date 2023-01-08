@@ -4,9 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Close, Quote, ThumbUp } from '../icons';
+import { useRouter } from 'next/router';
 
 export default function Activity({ data }) {
 	const { data: session } = useSession();
+	const router = useRouter();
 	const [likes, setLikes] = useState(() => data.likes);
 	const [likesVisibility, setLikesVisibility] = useState(false);
 
@@ -30,6 +32,7 @@ export default function Activity({ data }) {
 
 	const handleLike = async (id) => {
 		if (!session?.user) {
+			router.push('/login');
 			return;
 		}
 		const found = likes.some((el) => el._id === session.user.id);
