@@ -10,6 +10,7 @@ import { ArrowRound } from '../components/icons';
 import Layout from '../components/layout';
 import { defaultMetaProps } from '../components/layout/meta';
 import randomProfile from '../utils/randomProfile';
+import { useRouter } from 'next/router';
 
 type FormValues = {
 	name: string;
@@ -60,8 +61,9 @@ const resolver: Resolver<FormValues> = async (values) => {
 	};
 };
 
-const EditProfile = () => {
+export default function EditProfile() {
 	const { status, data: session } = useSession();
+	const router = useRouter();
 	const { theme } = useTheme();
 	const [sending, isSending] = useState<boolean>(false);
 	const notify = (message) => toast(message);
@@ -91,6 +93,15 @@ const EditProfile = () => {
 			setValue('email', session.user.email);
 		}
 	}, [session?.user, setValue]);
+
+	if (status === 'loading') {
+		return <p>Loading...</p>;
+	}
+
+	if (status === 'unauthenticated') {
+		router.push('/unauthorized');
+		return;
+	}
 
 	const submitHandler = async ({ name, email, password }) => {
 		isSending(true);
@@ -131,10 +142,6 @@ const EditProfile = () => {
 			alert(err.message);
 		}
 	};
-
-	if (status == 'loading') {
-		return 'loading...';
-	}
 
 	const randomImage = () => {
 		setAvatar(() => randomProfile());
@@ -232,7 +239,4 @@ const EditProfile = () => {
 			/>
 		</Layout>
 	);
-};
-
-EditProfile.auth = true;
-export default EditProfile;
+}
