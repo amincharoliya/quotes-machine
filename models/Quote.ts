@@ -28,6 +28,7 @@ const Schema = new mongoose.Schema<IQuote>(
 	}
 );
 
-const Quote = mongoose.models.Quote || mongoose.model<IQuote>('Quote', Schema);
+const Quote =
+	mongoose.models.Quote || mongoose.model<IQuote | any>('Quote', Schema);
 
 export default Quote;
