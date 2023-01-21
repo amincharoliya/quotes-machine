@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Alert } from '../icons';
 import ActivityForm from './activityForm';
 import ActivityPlaceholder from './activityPlaceholder';
@@ -7,14 +7,27 @@ import Activity from './activitySingle';
 export default function ActivityFeed() {
 	const [quotes, setQuotes] = useState(null);
 	const [notice, setNotice] = useState(null);
+	const intervalId = useRef(null);
+
 	useEffect(() => {
-		fetch('/api/quotes')
-			.then((data) => data.json())
-			.then((data) =>
-				data && data.length
-					? setQuotes(data.reverse())
-					: setNotice('No quotes Found')
-			);
+		intervalId.current = setInterval(() => {
+			getQuotes();
+		}, 8000);
+
+		function getQuotes() {
+			fetch('/api/quotes')
+				.then((data) => data.json())
+				.then((data) => {
+					clearInterval(intervalId.current);
+					data && data.length
+						? setQuotes(data.reverse())
+						: setNotice('No quotes Found');
+				});
+		}
+
+		getQuotes();
+
+		return () => clearInterval(intervalId.current);
 	}, []);
 
 	if (notice) {

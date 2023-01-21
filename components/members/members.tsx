@@ -1,13 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Member from './member';
 import MembersPlaceholder from './membersPlaceholder';
 
 export default function Members() {
 	const [members, setMembers] = useState(null);
+	const intervalId = useRef(null);
+
 	useEffect(() => {
-		fetch('/api/members')
-			.then((data) => data.json())
-			.then((data) => setMembers(data));
+		intervalId.current = setInterval(() => {
+			getMembers();
+		}, 8000);
+
+		function getMembers() {
+			fetch('/api/members')
+				.then((data) => data.json())
+				.then((data) => {
+					clearInterval(intervalId.current);
+					setMembers(data);
+				});
+		}
+
+		getMembers();
+
+		return () => clearInterval(intervalId.current);
 	}, []);
 
 	return (

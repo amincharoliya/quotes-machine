@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ActivityPlaceholder from '../../components/activity/activityPlaceholder';
 import Activity from '../../components/activity/activitySingle';
 import Layout from '../../components/layout';
@@ -12,13 +12,29 @@ export default function MemberSingle() {
 	const props = { ...defaultMetaProps, title: 'Members | Quote Machine' };
 	const { query } = useRouter();
 	const [data, setData] = useState(null);
+	const intervalId = useRef(null);
 
 	useEffect(() => {
-		if (query.id) {
+		if (!query.id) {
+			return;
+		}
+
+		intervalId.current = setInterval(() => {
+			getMemberData();
+		}, 8000);
+
+		function getMemberData() {
 			fetch(`/api/members/${query.id}`)
 				.then((data) => data.json())
-				.then((data) => setData(data));
+				.then((data) => {
+					clearInterval(intervalId.current);
+					setData(data);
+				});
 		}
+
+		getMemberData();
+
+		return () => clearInterval(intervalId.current);
 	}, [query]);
 
 	if (!data || !query) {
