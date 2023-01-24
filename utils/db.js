@@ -16,6 +16,7 @@ async function connect() {
 		// Disconnect becuase it's not in connected mode
 		await mongoose.disconnect();
 	}
+	mongoose.set('strictQuery', false);
 	const db = await mongoose.connect(process.env.MONGODB_URI);
 	console.log('New connection');
 	connection.isConnected = db.connections[0].readyState;
