@@ -83,7 +83,7 @@ export default function ActivityFeed() {
 			{pages > 1 && currentPage < pages ? (
 				<button
 					className={clsx(
-						'px-4 py-2 bg-theme-light text-white rounded-md flex items-center mx-auto my-5',
+						'px-5 py-3 bg-theme-light text-white rounded-md flex items-center mx-auto my-5',
 						loadingMore && 'pointer-events-none opacity-80'
 					)}
 					onClick={() => loadMoreQuotes()}
