@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				path: 'likes',
 				select: 'id name image',
 			})
-			.limit(limit)
+			.limit(limitNumber)
 			.skip(offset);
 	} catch (err) {
 		return new Error(err);
@@ -35,7 +35,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	}
 
 	const totalQuotes = await Quote.countDocuments();
-	const totalPages = Math.ceil(totalQuotes / limit);
+	const totalPages = Math.ceil(totalQuotes / limitNumber);
 
 	await db.disconnect();
 	res.send({ quotes, totalPages });
